@@ -60,7 +60,6 @@ public class Player : MonoBehaviour
     {
         Shield = maxShield;
         Life = maxLife;
-        SetPlayerControls(playerNumber);
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -71,8 +70,11 @@ public class Player : MonoBehaviour
 
         CalculateDirection();
         Rotate();
+    }
+
+    void FixedUpdate()
+    {
         Move(movementHorizontalDirection, movementVerticalDirection);
-        Debug.Log("Player"+playerNumber+":"+ angle);
     }
 
     private void GetInput()
@@ -131,30 +133,26 @@ public class Player : MonoBehaviour
             direction = "S";
         if (angle <= southEast && angle > east)
             direction = "SE";
-        Debug.Log("Player" + playerNumber + " of angle " + angle + " is looking " + direction);
+       // Debug.Log("Player" + playerNumber + " of angle " + angle + " is looking " + direction);
     }
     private void Move(float hDirection, float vDirection)
     {
-        Vector3 verticalVector = new Vector3(.0f, 1f, .0f);
-        Vector3 horizontalVector = new Vector3(1f, .0f, .0f);
-        if (vDirection != 0) // Moving up/down
-        {
-            this.transform.Translate(verticalVector * vDirection * movespeed * Time.deltaTime);
-            Debug.Log("Player " + playerNumber + " is moving " + (vDirection < 0 ? "down" : "up"));
-        }
-        if (hDirection != 0) // Moving left/right
-        {
-            this.transform.Translate(horizontalVector * hDirection * movespeed * Time.deltaTime);
-            Debug.Log("Player " + playerNumber + " is moving " + (hDirection < 0 ? "left" : "right"));
-        }
+        Vector3 moveVector = new Vector3(hDirection, vDirection, .0f);
+        rb.MovePosition(new Vector2(this.transform.position.x + moveVector.x * movespeed * Time.deltaTime,
+            this.transform.position.y + moveVector.y * movespeed * Time.deltaTime));
     }
     public void SetPlayerControls(int number)
     {
         if (number < 1 || number > 2)
         {
-            Debug.Log("Error when trying to assign number player: " + number);
+            //Debug.Log("Error when trying to assign number player: " + number);
             return;
         }
         this.playerNumber = number;
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collision");
     }
 }
