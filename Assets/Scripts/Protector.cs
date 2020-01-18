@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Protector : Player
+public class Protector : Character
 {
     // Start is called before the first frame update
     protected override void Start()

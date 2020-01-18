@@ -33,8 +33,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Player player1;
-    public Player player2;
+    public Character player1;
+    public Character player2;
     
 
     // Start is called before the first frame update

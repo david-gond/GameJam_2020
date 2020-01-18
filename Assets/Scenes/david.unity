@@ -9929,7 +9929,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471016932}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -9997,7 +9997,7 @@ GameObject:
   - component: {fileID: 1974692966}
   m_Layer: 0
   m_Name: P2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10014,12 +10014,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b3afebf4472f54488b9691ad98e722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeed: 4
+  movespeed: 8
   orientationMode: 0
-  maxShield: 0
-  shield: 0
-  maxLife: 0
-  life: 0
+  PrimarySkill: {fileID: 0}
+  maxShield: 25
+  shield: 25
+  maxLife: 1
+  life: 1
 --- !u!70 &1974692966
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -10153,9 +10154,10 @@ GameObject:
   - component: {fileID: 1982682749}
   - component: {fileID: 1982682745}
   - component: {fileID: 1982682744}
+  - component: {fileID: 1982682750}
   m_Layer: 0
   m_Name: P1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10172,12 +10174,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2269d97c78588aa47b23553d981fc316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeed: 10
-  orientationMode: 0
-  maxShield: 0
-  shield: 0
-  maxLife: 0
-  life: 0
+  movespeed: 8
+  orientationMode: 1
+  PrimarySkill: {fileID: 1982682750}
+  maxShield: 100
+  shield: 100
+  maxLife: 1
+  life: 1
 --- !u!70 &1982682745
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -10298,3 +10301,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1982682750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982682743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c41fca46aa5424aa0a865b568d009b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0.2
+  projectile: {fileID: 4125621481512616840, guid: 0ea7a0e7d94e6904a8c6c8ee07d8c54e,
+    type: 3}

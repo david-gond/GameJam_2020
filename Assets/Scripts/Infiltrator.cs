@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Infiltrator : Player
+public class Infiltrator : Character
 {
     // Start is called before the first frame update
     protected override void Start()
