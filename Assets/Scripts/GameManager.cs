@@ -33,8 +33,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private Vector2 currentMousePosition;
-
     public Player player1;
     public Player player2;
     
@@ -50,6 +48,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
     }
 }

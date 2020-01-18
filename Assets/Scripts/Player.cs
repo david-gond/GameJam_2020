@@ -11,8 +11,14 @@ public class Player : MonoBehaviour
      */
     private int playerNumber;
     private float angle;
+    private Vector2 currentMousePosition;
+    private float movementHorizontalDirection;
+    private float movementVerticalDirection;
+    private Rigidbody2D rb;
+
     public int movespeed;
     public OrientationMode orientationMode;
+
 
     /**
      * Properties
@@ -49,11 +55,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private float movementHorizontalDirection;
-    private float movementVerticalDirection;
-
-    private Rigidbody2D rb;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour
         CalculateDirection();
         Rotate();
         Move(movementHorizontalDirection, movementVerticalDirection);
+        Debug.Log("Player"+playerNumber+":"+ angle);
     }
 
     private void GetInput()
@@ -81,11 +83,55 @@ public class Player : MonoBehaviour
 
     private void CalculateDirection()
     {
+        Vector2 mousePos_xy = new Vector2(0, 0);
+        switch (orientationMode)
+        {
+            case OrientationMode.Mouse:
+                mousePos_xy = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 center_xy = new Vector2(this.transform.position.x, this.transform.position.y);
+                var vector1 = center_xy - mousePos_xy; // VectorToMoveTo
+                var vector2 = center_xy - new Vector2(center_xy.x+1, center_xy.y); // Vector right at the right of player
 
+                angle = Vector2.SignedAngle(vector1.normalized, vector2.normalized);
+                break;
+            case OrientationMode.Joystick:
+                
+                break;
+            default:
+                return;
+        }
+        //float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+        //transform.Rotate(0, angle, 0);
     }
     private void Rotate()
     {
+        int northEast = -23;
+        int north = -68;
+        int northWest = -113;
+        int west = -158;
+        int southWest = 158;
+        int south = 113;
+        int southEast = 68;
+        int east = 23;
 
+        string direction = "";
+        if (angle <= east && angle > northEast)
+            direction = "E";
+        if (angle <= northEast && angle > north)
+            direction = "NE";
+        if (angle <= north && angle > northWest)
+            direction = "N";
+        if (angle <= northWest && angle > west)
+            direction = "NW";
+        if (angle <= west || angle > southWest)
+            direction = "W";
+        if (angle <= southWest && angle > south)
+            direction = "SW";
+        if (angle <= south && angle > southEast)
+            direction = "S";
+        if (angle <= southEast && angle > east)
+            direction = "SE";
+        Debug.Log("Player" + playerNumber + " of angle " + angle + " is looking " + direction);
     }
     private void Move(float hDirection, float vDirection)
     {
