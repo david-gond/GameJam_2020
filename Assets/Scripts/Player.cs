@@ -19,11 +19,10 @@ public class Player : MonoBehaviour
     public int movespeed;
     public OrientationMode orientationMode;
 
-
     /**
      * Properties
      */
-    public int maxShield;
+    public int maxShield = 100;
     [SerializeField]
     private int shield;
     public int Shield
@@ -39,7 +38,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public int maxLife;
+    public int maxLife = 1;
     [SerializeField]
     private int life;
     public int Life
@@ -56,7 +55,7 @@ public class Player : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         Shield = maxShield;
         Life = maxLife;
@@ -64,7 +63,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         GetInput();
 
@@ -72,7 +71,7 @@ public class Player : MonoBehaviour
         Rotate();
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Move(movementHorizontalDirection, movementVerticalDirection);
     }
@@ -102,9 +101,8 @@ public class Player : MonoBehaviour
             default:
                 return;
         }
-        //float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-        //transform.Rotate(0, angle, 0);
     }
+
     private void Rotate()
     {
         int northEast = -23;
@@ -133,19 +131,18 @@ public class Player : MonoBehaviour
             direction = "S";
         if (angle <= southEast && angle > east)
             direction = "SE";
-       // Debug.Log("Player" + playerNumber + " of angle " + angle + " is looking " + direction);
+        //Debug.Log("Player" + playerNumber + " of angle " + angle + " is looking " + direction);
     }
     private void Move(float hDirection, float vDirection)
     {
         Vector3 moveVector = new Vector3(hDirection, vDirection, .0f);
-        rb.MovePosition(new Vector2(this.transform.position.x + moveVector.x * movespeed * Time.deltaTime,
-            this.transform.position.y + moveVector.y * movespeed * Time.deltaTime));
+        rb.MovePosition(new Vector2(transform.position.x + moveVector.x * movespeed * Time.deltaTime,
+            transform.position.y + moveVector.y * movespeed * Time.deltaTime));
     }
     public void SetPlayerControls(int number)
     {
         if (number < 1 || number > 2)
         {
-            //Debug.Log("Error when trying to assign number player: " + number);
             return;
         }
         this.playerNumber = number;
