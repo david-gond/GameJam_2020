@@ -33,15 +33,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private Vector2 currentMousePosition;
+
+    public Player player1;
+    public Player player2;
+    
+
     // Start is called before the first frame update
     void Start()
     {
         noise = 0;
+        player1.SetPlayerControls(1);
+        player2.SetPlayerControls(2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 }

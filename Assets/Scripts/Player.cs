@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Temp
-    public int playerNumber;
+    public enum OrientationMode { Mouse, Joystick }
 
+    /**
+     * Fields
+     */
+    private int playerNumber;
+    private float angle;
     public int movespeed;
+    public OrientationMode orientationMode;
 
+    /**
+     * Properties
+     */
     public int maxShield;
     [SerializeField]
     private int shield;
@@ -41,11 +49,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private string horizontal;
-    private string vertical;
-
-    private float horizontalDirection;
-    private float verticalDirection;
+    private float movementHorizontalDirection;
+    private float movementVerticalDirection;
 
     private Rigidbody2D rb;
 
@@ -54,47 +59,56 @@ public class Player : MonoBehaviour
     {
         Shield = maxShield;
         Life = maxLife;
-        SetPlayer(playerNumber);
+        SetPlayerControls(playerNumber);
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontalDirection = Input.GetAxis("Player"+playerNumber+"_Horizontal");
-        verticalDirection = Input.GetAxis("Player"+playerNumber+"_Vertical");
+        GetInput();
 
-        Move(horizontalDirection, verticalDirection);
+        CalculateDirection();
+        Rotate();
+        Move(movementHorizontalDirection, movementVerticalDirection);
     }
 
+    private void GetInput()
+    {
+        movementHorizontalDirection = Input.GetAxis("Player" + playerNumber + "_Horizontal");
+        movementVerticalDirection = Input.GetAxis("Player" + playerNumber + "_Vertical");
+    }
+
+    private void CalculateDirection()
+    {
+
+    }
+    private void Rotate()
+    {
+
+    }
     private void Move(float hDirection, float vDirection)
     {
         Vector3 verticalVector = new Vector3(.0f, 1f, .0f);
         Vector3 horizontalVector = new Vector3(1f, .0f, .0f);
         if (vDirection != 0) // Moving up/down
         {
-            this.transform.Translate(verticalVector * movespeed * Time.deltaTime);
+            this.transform.Translate(verticalVector * vDirection * movespeed * Time.deltaTime);
             Debug.Log("Player " + playerNumber + " is moving " + (vDirection < 0 ? "down" : "up"));
         }
         if (hDirection != 0) // Moving left/right
         {
-            this.transform.Translate(horizontalVector * movespeed * Time.deltaTime);
+            this.transform.Translate(horizontalVector * hDirection * movespeed * Time.deltaTime);
             Debug.Log("Player " + playerNumber + " is moving " + (hDirection < 0 ? "left" : "right"));
         }
     }
-    public void SetPlayer(int number)
+    public void SetPlayerControls(int number)
     {
-        switch (number)
+        if (number < 1 || number > 2)
         {
-            case 1:
-                this.horizontal = "Player1";
-                this.vertical = "Player1";
-                break;
-            case 2:
-                this.horizontal = "Player2";
-                this.vertical = "Player2";
-                break;
-            default:
-                return;
+            Debug.Log("Error when trying to assign number player: " + number);
+            return;
         }
+        this.playerNumber = number;
     }
 }
