@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public abstract class Character : MonoBehaviour
 {
     public enum OrientationMode { Mouse, Joystick }
 
@@ -14,10 +14,19 @@ public class Player : MonoBehaviour
     private Vector2 currentMousePosition;
     private float movementHorizontalDirection;
     private float movementVerticalDirection;
+    private float main_action;
+    private float secondary_action;
     private Rigidbody2D rb;
 
     public int movespeed;
     public OrientationMode orientationMode;
+    public Skill PrimarySkill;
+   
+    public Skill SecondarySkill
+    {
+        get;
+        protected set;
+    }
 
     /**
      * Properties
@@ -54,6 +63,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public float Orientation
+    {
+        get
+        {
+            return angle;
+        }
+    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -80,6 +97,14 @@ public class Player : MonoBehaviour
     {
         movementHorizontalDirection = Input.GetAxis("Player" + playerNumber + "_Horizontal");
         movementVerticalDirection = Input.GetAxis("Player" + playerNumber + "_Vertical");
+
+        main_action = Input.GetAxis("Player" + playerNumber + "_Primary");
+        secondary_action = Input.GetAxis("Player" + playerNumber + "_Secondary");
+
+        if (main_action == 1)
+            Primary();
+        else if (secondary_action == 1)
+            Secondary();
     }
 
     private void CalculateDirection()
@@ -96,7 +121,12 @@ public class Player : MonoBehaviour
                 angle = Vector2.SignedAngle(vector1.normalized, vector2.normalized);
                 break;
             case OrientationMode.Joystick:
-                
+                string verticalAxis = "Player" + playerNumber + "_LStick_Horizontal";
+                string horizontalAxis = "Player" + playerNumber + "_LStick_Vertical";
+                float xAxis = Input.GetAxis(horizontalAxis);
+                float yAxis = Input.GetAxis(verticalAxis);
+
+                angle = Mathf.Atan2(Input.GetAxis(verticalAxis), Input.GetAxis(horizontalAxis)) * 180 / Mathf.PI;
                 break;
             default:
                 return;
@@ -131,9 +161,9 @@ public class Player : MonoBehaviour
             direction = "S";
         if (angle <= southEast && angle > east)
             direction = "SE";
-        //Debug.Log("Player" + playerNumber + " of angle " + angle + " is looking " + direction);
+        
     }
-    private void Move(float hDirection, float vDirection)
+    public void Move(float hDirection, float vDirection)
     {
         Vector3 moveVector = new Vector3(hDirection, vDirection, .0f);
         rb.MovePosition(new Vector2(transform.position.x + moveVector.x * movespeed * Time.deltaTime,
@@ -151,5 +181,15 @@ public class Player : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Collision");
+    }
+
+    protected void Primary()
+    {
+        PrimarySkill.Activate();
+    }
+
+    protected void Secondary()
+    {
+        SecondarySkill.Activate();
     }
 }
