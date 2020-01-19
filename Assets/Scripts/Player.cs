@@ -1,0 +1,202 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class Player : Character
+{
+    public enum OrientationMode { Mouse, Joystick }
+
+    /**
+     * Fields
+     */
+    private int playerNumber;
+    private float angle;
+    private Vector2 currentMousePosition;
+    private float movementHorizontalDirection;
+    private float movementVerticalDirection;
+    private float main_action;
+    private float secondary_action;
+    private Rigidbody2D rb;
+    private Animator animator;
+    private bool isPrimaryAxisInUse = false;
+    private bool isSecondaryAxisInUse = false;
+
+    public int movespeed;
+    public OrientationMode orientationMode;
+    public Skill PrimarySkill;
+   
+    public Skill SecondarySkill
+    {
+        get;
+        protected set;
+    }
+
+    public float Orientation
+    {
+        get
+        {
+            return angle;
+        }
+    }
+
+    // Start is called before the first frame update
+    protected new virtual void Start()
+    {
+        base.Start();
+        Shield = maxShield;
+        Life = maxLife;
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    protected new virtual void Update()
+    {
+        GetInput();
+
+        CalculateDirection();
+        Rotate();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        Move(movementHorizontalDirection, movementVerticalDirection);
+    }
+
+    private void GetInput()
+    {
+        movementHorizontalDirection = Input.GetAxis("Player" + playerNumber + "_Horizontal");
+        movementVerticalDirection = Input.GetAxis("Player" + playerNumber + "_Vertical");
+
+        string primaryString = "Player" + playerNumber + "_Primary";
+        if (Input.GetAxisRaw(primaryString) != 0)
+        {
+            if (isPrimaryAxisInUse == false)
+            {
+                Primary();
+                isPrimaryAxisInUse = true;
+            }
+        }
+        if (Input.GetAxisRaw(primaryString) == 0)
+        {
+            isPrimaryAxisInUse = false;
+        }
+
+        string secondaryString = "Player" + playerNumber + "_Secondary";
+        if (Input.GetAxisRaw(secondaryString) != 0)
+        {
+            if (isSecondaryAxisInUse == false)
+            {
+                Secondary();
+                isSecondaryAxisInUse = true;
+            }
+        }
+        if (Input.GetAxisRaw(secondaryString) == 0)
+        {
+            isSecondaryAxisInUse = false;
+        }           
+    }
+
+    private void CalculateDirection()
+    {
+        Vector2 mousePos_xy = new Vector2(0, 0);
+        switch (orientationMode)
+        {
+            case OrientationMode.Mouse:
+                mousePos_xy = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 center_xy = new Vector2(transform.position.x, transform.position.y);
+                var vector1 = center_xy - mousePos_xy; // VectorToMoveTo
+                var vector2 = center_xy - new Vector2(center_xy.x+1, center_xy.y); // Vector right at the right of player
+
+                angle = Vector2.SignedAngle(vector1.normalized, vector2.normalized);
+                break;
+            case OrientationMode.Joystick:
+                string verticalAxis = "Player" + playerNumber + "_LStick_Horizontal";
+                string horizontalAxis = "Player" + playerNumber + "_LStick_Vertical";
+                float xAxis = Input.GetAxis(horizontalAxis);
+                float yAxis = Input.GetAxis(verticalAxis);
+
+                angle = Mathf.Atan2(Input.GetAxis(verticalAxis), Input.GetAxis(horizontalAxis)) * 180 / Mathf.PI;
+                break;
+            default:
+                return;
+        }
+    }
+
+    private void Rotate()
+    {
+        int northEast = -23;
+        int north = -68;
+        int northWest = -113;
+        int west = -158;
+        int southWest = 158;
+        int south = 113;
+        int southEast = 68;
+        int east = 23;
+
+        if (angle <= east && angle > northEast) // East
+        {
+            animator.SetFloat("facingUp", 0);
+            animator.SetFloat("facingRight", 1);
+        }
+        if (angle <= northEast && angle > north) // North East
+        {
+            animator.SetFloat("facingUp", 1);
+            animator.SetFloat("facingRight", 1);
+        }
+        if (angle <= north && angle > northWest) // North
+        {
+            animator.SetFloat("facingUp", 1);
+            animator.SetFloat("facingRight", 0);
+        }
+        if (angle <= northWest && angle > west) // North West
+        {
+            animator.SetFloat("facingUp", 1);
+            animator.SetFloat("facingRight", -1);
+        }
+        if (angle <= west || angle > southWest) // West
+        {
+            animator.SetFloat("facingUp", 0);
+            animator.SetFloat("facingRight", -1);
+        }
+        if (angle <= southWest && angle > south) // South West
+        {
+            animator.SetFloat("facingUp", -1);
+            animator.SetFloat("facingRight", -1);
+        }
+        if (angle <= south && angle > southEast) // South
+        {
+            animator.SetFloat("facingUp", -1);
+            animator.SetFloat("facingRight", 0);
+        }
+        if (angle <= southEast && angle > east) // South east
+        {
+            animator.SetFloat("facingUp", -1);
+            animator.SetFloat("facingRight", 1);
+        }
+    }
+    public void Move(float hDirection, float vDirection)
+    {
+        Vector3 moveVector = new Vector3(hDirection, vDirection, .0f);
+        rb.MovePosition(new Vector2(transform.position.x + moveVector.x * movespeed * Time.deltaTime,
+            transform.position.y + moveVector.y * movespeed * Time.deltaTime));
+    }
+    public void SetPlayerControls(int number)
+    {
+        if (number < 1 || number > 2)
+        {
+            return;
+        }
+        playerNumber = number;
+    }
+
+    protected void Primary()
+    {
+        PrimarySkill.Activate();
+    }
+
+    protected void Secondary()
+    {
+        SecondarySkill.Activate();
+    }
+}

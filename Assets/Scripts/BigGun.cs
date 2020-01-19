@@ -5,13 +5,17 @@ using UnityEngine;
 public class BigGun : Skill
 {
     public GameObject projectile;
-    private Character character;
+    private Player character;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        character = GetComponent<Character>();
+        character = GetComponent<Player>();
+        Debug.Log("Big Gun: " + character);
+        ProjectileController pc = projectile.GetComponent<ProjectileController>();
+        pc.origin = character.gameObject;
+        pc.team = "players";
     }
 
     // Update is called once per frame
