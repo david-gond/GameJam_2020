@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 3ceb7c248931342419d5d74c64524b78
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: TESLA
+  fontNames:
+  - TESLA
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9f5d97ce908834b478536cd216469c82, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
