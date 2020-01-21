@@ -5,14 +5,14 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     private Animator animator;
-    private Rigidbody2D rb;
+    private Collider2D coll;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         animator.SetBool("isOpen", false);
-        rb = GetComponent<Rigidbody2D>();
+        coll = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -24,6 +24,7 @@ public class Door : MonoBehaviour
     public void Open()
     {
         animator.SetBool("isOpen", true);
+        // Manage collisions here
     }
 
     public void Close()
