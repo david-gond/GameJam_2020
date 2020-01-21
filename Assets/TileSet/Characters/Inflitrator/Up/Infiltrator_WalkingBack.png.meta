@@ -1,22 +1,19 @@
 fileFormatVersion: 2
-guid: 78db1b6fc3f20314a9dffd4c2ff82371
+guid: e1e1db9848186404b8662bb8b3df9104
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1212109227408481176
-    second: Protector_Crouched_0
+      213: -3946892225723922426
+    second: Infiltrator_WalkingBack_0
   - first:
-      213: 4785049457176447424
-    second: Protector_Crouched_1
+      213: -5947631169334701168
+    second: Infiltrator_WalkingBack_1
   - first:
-      213: 1821254497246702898
-    second: Protector_Crouched_2
+      213: 374122326111829168
+    second: Infiltrator_WalkingBack_2
   - first:
-      213: -6932281954665366482
-    second: Protector_Crouched_3
-  - first:
-      213: 3871438381946052462
-    second: Protector_Crouched_4
+      213: -4054310623429386115
+    second: Infiltrator_WalkingBack_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -101,11 +98,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Protector_Crouched_0
+      name: Infiltrator_WalkingBack_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 0
         width: 64
         height: 64
       alignment: 0
@@ -115,18 +112,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd971b2b3f097d74b8bfcb00e844d8a6
-      internalID: -1212109227408481176
+      spriteID: 6e0839fc58a9122428a87adc5bf766d0
+      internalID: -3946892225723922426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Protector_Crouched_1
+      name: Infiltrator_WalkingBack_1
       rect:
         serializedVersion: 2
         x: 64
-        y: 64
+        y: 0
         width: 64
         height: 64
       alignment: 0
@@ -136,38 +133,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a597602b4006b548872f36475a2062f
-      internalID: 4785049457176447424
+      spriteID: 54e69d31afc08a04fbc709536e59bb8e
+      internalID: -5947631169334701168
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Protector_Crouched_2
+      name: Infiltrator_WalkingBack_2
       rect:
         serializedVersion: 2
         x: 128
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7385ca422adbc7640b694b26d5004f70
-      internalID: 1821254497246702898
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Protector_Crouched_3
-      rect:
-        serializedVersion: 2
-        x: 0
         y: 0
         width: 64
         height: 64
@@ -178,17 +154,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b6a724acfaa6ef4b9bba419ca4f4a0b
-      internalID: -6932281954665366482
+      spriteID: cbf4213b02a6d6349bac44394971825a
+      internalID: 374122326111829168
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Protector_Crouched_4
+      name: Infiltrator_WalkingBack_3
       rect:
         serializedVersion: 2
-        x: 64
+        x: 192
         y: 0
         width: 64
         height: 64
@@ -199,8 +175,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df4a724da70cea84ab14924cd2727140
-      internalID: 3871438381946052462
+      spriteID: 4a280c754c1fdb846b601efaf64fa526
+      internalID: -4054310623429386115
       vertices: []
       indices: 
       edges: []
