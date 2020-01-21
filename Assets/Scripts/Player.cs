@@ -37,6 +37,18 @@ public abstract class Player : Character
         {
             return angle;
         }
+        protected set
+        {
+            if (value < -180)
+            {
+                value = -180;
+            }
+            if (value > 180)
+            {
+                value = 180;
+            }
+            angle = value;
+        }
     }
 
     // Start is called before the first frame update
@@ -107,7 +119,6 @@ public abstract class Player : Character
                 Vector2 center_xy = new Vector2(transform.position.x, transform.position.y);
                 var vector1 = center_xy - mousePos_xy; // VectorToMoveTo
                 var vector2 = center_xy - new Vector2(center_xy.x+1, center_xy.y); // Vector right at the right of player
-
                 angle = Vector2.SignedAngle(vector1.normalized, vector2.normalized);
                 break;
             case OrientationMode.Joystick:
@@ -136,43 +147,43 @@ public abstract class Player : Character
 
         if (angle <= east && angle > northEast) // East
         {
-            animator.SetFloat("facingUp", 0);
-            animator.SetFloat("facingRight", 1);
+            animator.SetInteger("facingUp", 0);
+            animator.SetInteger("facingRight", 1);
         }
         if (angle <= northEast && angle > north) // North East
         {
-            animator.SetFloat("facingUp", 1);
-            animator.SetFloat("facingRight", 1);
+            animator.SetInteger("facingUp", 1);
+            animator.SetInteger("facingRight", 1);
         }
         if (angle <= north && angle > northWest) // North
         {
-            animator.SetFloat("facingUp", 1);
-            animator.SetFloat("facingRight", 0);
+            animator.SetInteger("facingUp", 1);
+            animator.SetInteger("facingRight", 0);
         }
         if (angle <= northWest && angle > west) // North West
         {
-            animator.SetFloat("facingUp", 1);
-            animator.SetFloat("facingRight", -1);
+            animator.SetInteger("facingUp", 1);
+            animator.SetInteger("facingRight", -1);
         }
         if (angle <= west || angle > southWest) // West
         {
-            animator.SetFloat("facingUp", 0);
-            animator.SetFloat("facingRight", -1);
+            animator.SetInteger("facingUp", 0);
+            animator.SetInteger("facingRight", -1);
         }
         if (angle <= southWest && angle > south) // South West
         {
-            animator.SetFloat("facingUp", -1);
-            animator.SetFloat("facingRight", -1);
+            animator.SetInteger("facingUp", -1);
+            animator.SetInteger("facingRight", -1);
         }
         if (angle <= south && angle > southEast) // South
         {
-            animator.SetFloat("facingUp", -1);
-            animator.SetFloat("facingRight", 0);
+            animator.SetInteger("facingUp", -1);
+            animator.SetInteger("facingRight", 0);
         }
         if (angle <= southEast && angle > east) // South east
         {
-            animator.SetFloat("facingUp", -1);
-            animator.SetFloat("facingRight", 1);
+            animator.SetInteger("facingUp", -1);
+            animator.SetInteger("facingRight", 1);
         }
     }
     public void Move(float hDirection, float vDirection)

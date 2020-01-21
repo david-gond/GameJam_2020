@@ -14,14 +14,8 @@ public class ProjectileController : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        rigid.AddForce(0.25f * -transform.right);
+        rigid.AddForce(0.25f * transform.right);
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), origin.GetComponent<Collider2D>());
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        //rigid.AddForce(0.025f * -transform.right);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
