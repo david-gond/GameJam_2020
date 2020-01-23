@@ -12,7 +12,7 @@ public class BigGun : Skill
     {
         base.Start();
         character = GetComponent<Player>();
-        ProjectileController pc = projectile.GetComponent<ProjectileController>();
+        var pc = projectile.GetComponent<ProjectileController>();
         pc.origin = character.gameObject;
         pc.team = "players";
     }
@@ -25,11 +25,8 @@ public class BigGun : Skill
 
     public override bool Activate()
     {
-        if (base.Activate())
-        {
-            Instantiate(projectile, new Vector3(GetComponent<SpriteRenderer>().transform.position.x, transform.position.y, 0), Quaternion.AngleAxis(character.Orientation, Vector3.forward));
-            return true;
-        }
-        return false;
+        if (!base.Activate()) return false;
+        Instantiate(projectile, new Vector3(GetComponent<SpriteRenderer>().transform.position.x, transform.position.y, 0), Quaternion.AngleAxis(character.Orientation, Vector3.forward));
+        return true;
     }
 }

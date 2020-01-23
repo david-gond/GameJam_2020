@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22604debc08ba364797ced47b4905aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hackable: {fileID: 0}
+  hackable:
+  - {fileID: 0}
 --- !u!50 &1665625991689428604
 Rigidbody2D:
   serializedVersion: 4

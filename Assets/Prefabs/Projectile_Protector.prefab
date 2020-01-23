@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677b9fd7c3774cc44bdf1ea2322e3639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigid: {fileID: 0}
   origin: {fileID: 0}
   team: players
   damage: 1

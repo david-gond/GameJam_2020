@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class HackController : MonoBehaviour
 {
-    public GameObject hackable;
+    public Hackable[] hackable;
 
     private bool isHackable;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         isHackable = false;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

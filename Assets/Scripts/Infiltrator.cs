@@ -1,14 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Infiltrator : Player
 {
-    public GameObject HackableObject
-    {
-        get;
-        set;
-    }
+    public GameObject HackableObject { get; set; }
 
     // Start is called before the first frame update
     protected override void Start()
@@ -22,9 +19,21 @@ public class Infiltrator : Player
         base.Update();
     }
 
+    private void OnTriggerEnter2D(Component collision)
+    {
+        var gob = collision.gameObject;
+        switch (collision.gameObject.tag)
+        {
+            case "Hackable":
+                HackableObject = gob;
+                break;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        switch (collision.gameObject.tag)
+        var gob = collision.gameObject;
+        switch (gob.tag)
         {
             case "Hackable":
                 HackableObject = null;

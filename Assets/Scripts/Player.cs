@@ -23,20 +23,13 @@ public abstract class Player : Character
 
     public int movespeed;
     public OrientationMode orientationMode;
-    public Skill PrimarySkill;
-   
-    public Skill SecondarySkill
-    {
-        get;
-        protected set;
-    }
+    public Skill primarySkill;
+
+    public Skill secondarySkill;
 
     public float Orientation
     {
-        get
-        {
-            return angle;
-        }
+        get => angle;
         protected set
         {
             if (value < -180)
@@ -111,7 +104,7 @@ public abstract class Player : Character
 
     private void CalculateDirection()
     {
-        Vector2 mousePos_xy = new Vector2(0, 0);
+        var mousePos_xy = new Vector2(0, 0);
         switch (orientationMode)
         {
             case OrientationMode.Mouse:
@@ -188,7 +181,7 @@ public abstract class Player : Character
     }
     public void Move(float hDirection, float vDirection)
     {
-        Vector3 moveVector = new Vector3(hDirection, vDirection, .0f);
+        var moveVector = new Vector3(hDirection, vDirection, .0f);
         rb.MovePosition(new Vector2(transform.position.x + moveVector.x * movespeed * Time.deltaTime,
             transform.position.y + moveVector.y * movespeed * Time.deltaTime));
     }
@@ -203,11 +196,17 @@ public abstract class Player : Character
 
     protected void Primary()
     {
-        PrimarySkill.Activate();
+        ActivateSkill(primarySkill);
     }
 
     protected void Secondary()
     {
-        SecondarySkill.Activate();
+        ActivateSkill(secondarySkill);
+    }
+
+    private static void ActivateSkill(Skill skill)
+    {
+        if (skill != null)
+            skill.Activate();
     }
 }

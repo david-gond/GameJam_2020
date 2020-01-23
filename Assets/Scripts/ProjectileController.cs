@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-    Rigidbody2D rigid;
+    public Rigidbody2D rigid;
     public GameObject origin;
     public string team;
 
     public int damage;
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         rigid.AddForce(0.25f * transform.right);
@@ -20,8 +20,8 @@ public class ProjectileController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject gob = collision.gameObject;
-        Character character = gob.GetComponent<Character>();
+        var gob = collision.gameObject;
+        var character = gob.GetComponent<Character>();
         Debug.Log(team);
         if (character != null)
         {

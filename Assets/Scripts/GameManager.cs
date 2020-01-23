@@ -9,37 +9,31 @@ public class GameManager : MonoBehaviour
 
     public int Noise
     {
-        get
-        {
-            return this.noise;
-        }
+        get => noise;
         private set
         {
-            if (this.noise - value < 0)
-                this.noise = value;
+            if (noise - value < 0)
+                noise = value;
         }
     }
 
     private int alarmLevel;
     public int AlarmLevel
     {
-        get
-        {
-            return this.alarmLevel;
-        }
+        get => alarmLevel;
         private set
         {
-            if (this.alarmLevel - value < 0)
-                this.alarmLevel = value;
+            if (alarmLevel - value < 0)
+                alarmLevel = value;
         }
     }
 
     public Player player1;
     public Player player2;
-    
+
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         noise = 0;
         player1.SetPlayerControls(1);
@@ -47,7 +41,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
     }

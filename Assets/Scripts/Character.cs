@@ -12,10 +12,7 @@ public abstract class Character : MonoBehaviour
     private int shield;
     public int Shield
     {
-        get
-        {
-            return shield;
-        }
+        get => shield;
         protected set
         {
             if (shield - value < 0)
@@ -28,10 +25,7 @@ public abstract class Character : MonoBehaviour
     private int life;
     public int Life
     {
-        get
-        {
-            return life;
-        }
+        get => life;
         protected set
         {
             life = value;
@@ -51,22 +45,10 @@ public abstract class Character : MonoBehaviour
     {
 
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        switch (collision.gameObject.tag)
-        {
-            case "Hackable":
-                Infiltrator i = collision.gameObject.GetComponent<Character>() as Infiltrator;
-                i.HackableObject = collision.gameObject;
-                break;
-        }
-    }
-
-
+    
     public bool Damage(int damage)
     {
-        int damageLeft = damage - Shield;
+        var damageLeft = damage - Shield;
         Shield -= damage;
         if (damageLeft > 0)
         {

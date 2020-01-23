@@ -21,20 +21,14 @@ public class Hack : Skill
 
     public override bool Activate()
     {
-        Debug.Log("Hack");
-        if (character.HackableObject != null)
+        if (character.HackableObject == null) return false;
+        if (!base.Activate()) return false;
+        Debug.Log("Hacking");
+        var hackController = character.HackableObject.GetComponent<HackController>();
+        foreach (var hack in hackController.hackable)
         {
-            Debug.Log("Hackable");
-
-            if (base.Activate())
-            {
-                Debug.Log("Hack complete");
-
-                HackController hackController = character.HackableObject.GetComponent<HackController>();
-                Destroy(hackController.hackable);
-                return true;
-            }
+            hack.Open();
         }
-        return false;
+        return true;
     }
 }

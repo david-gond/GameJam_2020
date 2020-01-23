@@ -7,7 +7,7 @@ public class MobFilter : MonoBehaviour
     private Rigidbody2D rb;
     public GameObject[] canPass;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         foreach (GameObject gob in canPass)
@@ -17,7 +17,7 @@ public class MobFilter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
 
     }
