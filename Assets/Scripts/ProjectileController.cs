@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-    public Rigidbody2D rigid;
+    private Rigidbody2D rigid;
     public GameObject origin;
     public string team;
 
@@ -14,8 +14,12 @@ public class ProjectileController : MonoBehaviour
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        rigid.AddForce(0.25f * transform.right);
+        rigid.AddForce(rigid.mass * 2500f * transform.right);
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), origin.GetComponent<Collider2D>());
+    }
+
+    private void Update()
+    {
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
