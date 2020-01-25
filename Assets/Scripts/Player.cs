@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,16 @@ public abstract class Player : Character
         Joystick,
         Keyboard
     }
+
+    private const int east = 0;
+    private const int northEast = 45;
+    private const int north = 90;
+    private const int northWest = 135;
+    private const int west = 180;
+    private const int southWest = 225;
+    private const int south = 270;
+    private const int southEast = 315;
+
 
     /**
      * Fields
@@ -36,20 +47,7 @@ public abstract class Player : Character
     public float Orientation
     {
         get => angle;
-        protected set
-        {
-            if (value < -180)
-            {
-                value = -180;
-            }
-
-            if (value > 180)
-            {
-                value = 180;
-            }
-
-            angle = value;
-        }
+        protected set { angle = value % 360; }
     }
 
     // Start is called before the first frame update
@@ -124,6 +122,7 @@ public abstract class Player : Character
                 var vector2 =
                     center_xy - new Vector2(center_xy.x + 1, center_xy.y); // Vector right at the right of player
                 angle = Vector2.SignedAngle(vector1.normalized, vector2.normalized);
+                angle = (360 - angle) % 360;
                 break;
             case OrientationMode.Joystick:
                 string verticalAxis = "Player" + playerNumber + "_RStick_Horizontal";
@@ -135,32 +134,38 @@ public abstract class Player : Character
                 break;
             case OrientationMode.Keyboard:
                 if (movementHorizontalDirection == 0 && movementVerticalDirection == 0)
+                {
+                    animator.SetBool("isMoving", false);
                     return;
+                }
+
+                animator.SetBool("isMoving", true);
                 if (movementHorizontalDirection > 0)
                 {
                     if (movementVerticalDirection > 0) // North East
-                        angle = 45;
+                        Orientation = northEast;
                     else if (movementVerticalDirection < 0) // South East
-                        angle = 315;
+                        Orientation = southEast;
                     else // East
-                        angle = 0;
+                        Orientation = east;
                 }
                 else if (movementHorizontalDirection < 0)
                 {
                     if (movementVerticalDirection > 0) // North West
-                        angle = 135;
+                        Orientation = northWest;
                     else if (movementVerticalDirection < 0) // South West
-                        angle = 225;
+                        Orientation = southWest;
                     else // West
-                        angle = 180;
+                        Orientation = west;
                 }
                 else if (movementHorizontalDirection == 0)
                 {
                     if (movementVerticalDirection > 0) // North
-                        angle = 90;
+                        Orientation = north;
                     else if (movementVerticalDirection < 0) // South
-                        angle = 270;
+                        Orientation = south;
                 }
+
                 break;
             default:
                 return;
@@ -169,60 +174,44 @@ public abstract class Player : Character
 
     private void Rotate()
     {
-        int northEast = -23;
-        int north = -68;
-        int northWest = -113;
-        int west = -158;
-        int southWest = 158;
-        int south = 113;
-        int southEast = 68;
-        int east = 23;
-
-        if (angle <= east && angle > northEast) // East
-        {
-            animator.SetInteger("facingUp", 0);
-            animator.SetInteger("facingRight", 1);
-        }
-
-        if (angle <= northEast && angle > north) // North East
+        if ((east + northEast) / 2f <= angle && angle < (northEast + north) / 2f) // North East
         {
             animator.SetInteger("facingUp", 1);
             animator.SetInteger("facingRight", 1);
         }
-
-        if (angle <= north && angle > northWest) // North
+        else if ((northEast + north) / 2f <= angle && angle < (north + northWest) / 2f) // North
         {
             animator.SetInteger("facingUp", 1);
             animator.SetInteger("facingRight", 0);
         }
-
-        if (angle <= northWest && angle > west) // North West
+        else if ((north + northWest) / 2f <= angle && angle < (northWest + west) / 2f) // North West
         {
             animator.SetInteger("facingUp", 1);
             animator.SetInteger("facingRight", -1);
         }
-
-        if (angle <= west || angle > southWest) // West
+        else if ((northWest + west) / 2f <= angle && angle < (west + southWest) / 2f) // West
         {
             animator.SetInteger("facingUp", 0);
             animator.SetInteger("facingRight", -1);
         }
-
-        if (angle <= southWest && angle > south) // South West
+        else if ((west + southWest) / 2f <= angle && angle < (southWest + south) / 2f) // South West
         {
             animator.SetInteger("facingUp", -1);
             animator.SetInteger("facingRight", -1);
         }
-
-        if (angle <= south && angle > southEast) // South
+        else if ((southWest + south) / 2f <= angle && angle < (south + southEast) / 2f) // South
         {
             animator.SetInteger("facingUp", -1);
             animator.SetInteger("facingRight", 0);
         }
-
-        if (angle <= southEast && angle > east) // South east
+        else if ((south + southEast) / 2f <= angle && angle < (southEast + east) / 2f) // South east
         {
             animator.SetInteger("facingUp", -1);
+            animator.SetInteger("facingRight", 1);
+        }
+        else // East
+        {
+            animator.SetInteger("facingUp", 0);
             animator.SetInteger("facingRight", 1);
         }
     }
