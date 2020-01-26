@@ -5,13 +5,16 @@ using UnityEngine;
 public class HackController : MonoBehaviour
 {
     public Hackable[] hackable;
+    public AudioClip hack;
 
+    private AudioSource audio;
     private bool isHackable;
 
     // Start is called before the first frame update
     private void Start()
     {
         isHackable = false;
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -23,7 +26,6 @@ public class HackController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Hack available");
             isHackable = true;
         }
     }
@@ -32,8 +34,16 @@ public class HackController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Hack not available");
             isHackable = false;
         }
+    }
+
+    public void Hack()
+    {
+        foreach (var hack in hackable)
+        {
+            hack.Open();
+        }
+        audio.PlayOneShot(hack);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Enemy : Character
@@ -37,14 +38,27 @@ public class Enemy : Character
         Vector2 rightRay = 10f * transform.up + distanceFromForward * transform.right;
         float leftAngle = Vector3.SignedAngle(transform.position, leftRay, Vector3.forward);
         float rightAngle = Vector3.SignedAngle(transform.position, rightRay, Vector3.forward);
-        //foreach (GameObject player in players)
+        foreach (GameObject player in players)
         {
-            GameObject player = players[1];
             playerPosition = new Vector2(player.transform.position.x, player.transform.position.y);
             vector1 = center_xy - playerPosition;
             vector2 = center_xy - rightAxis;
             angleToPlayer = Vector2.SignedAngle(vector1.normalized, vector2.normalized);
 
+            // Bit shift the index of the layer (8) to get a bit mask
+            int layerMask = LayerMask.GetMask("Player");
+
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, playerPosition, out hit, Mathf.Infinity, layerMask))
+            {
+                Debug.DrawRay(transform.position, playerPosition * 50, Color.yellow);
+                Debug.Log("Did Hit");
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, playerPosition * 1000, Color.white);
+                Debug.Log("Did not Hit");
+            }
             if (angleToPlayer > leftAngle && angleToPlayer < rightAngle)
             {
                 transform.position = Vector2.MoveTowards(transform.position, playerPosition, movespeed * Time.deltaTime);
