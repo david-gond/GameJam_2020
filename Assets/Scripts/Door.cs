@@ -7,6 +7,7 @@ public class Door : Hackable
 {
     private Animator animator;
     private GameObject coll;
+    public GameObject door;
 
     // Start is called before the first frame update
     private void Start()
