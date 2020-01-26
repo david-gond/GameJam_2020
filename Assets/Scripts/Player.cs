@@ -7,7 +7,6 @@ public abstract class Player : Character
 {
     public enum OrientationMode
     {
-        Mouse,
         Joystick,
         Keyboard
     }
@@ -115,15 +114,6 @@ public abstract class Player : Character
         var mousePos_xy = new Vector2(0, 0);
         switch (orientationMode)
         {
-            case OrientationMode.Mouse:
-                mousePos_xy = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 center_xy = new Vector2(transform.position.x, transform.position.y);
-                var vector1 = center_xy - mousePos_xy; // VectorToMoveTo
-                var vector2 =
-                    center_xy - new Vector2(center_xy.x + 1, center_xy.y); // Vector right at the right of player
-                angle = Vector2.SignedAngle(vector1.normalized, vector2.normalized);
-                angle = (360 - angle) % 360;
-                break;
             case OrientationMode.Joystick:
                 string verticalAxis = "Player" + playerNumber + "_RStick_Horizontal";
                 string horizontalAxis = "Player" + playerNumber + "_RStick_Vertical";
