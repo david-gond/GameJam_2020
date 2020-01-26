@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
@@ -8,21 +9,23 @@ public abstract class Character : MonoBehaviour
      * Properties
      */
     public int maxShield;
-    [SerializeField]
-    private int shield;
+
+    [SerializeField] private int shield;
+
     public int Shield
     {
         get => shield;
         protected set
         {
             if (shield - value < 0)
-                shield = value;
+                shield = 0;
+            shield = value;
         }
     }
 
     public int maxLife;
-    [SerializeField]
-    private int life;
+    [SerializeField] private int life;
+
     public int Life
     {
         get => life;
@@ -30,22 +33,20 @@ public abstract class Character : MonoBehaviour
         {
             life = value;
             if (life <= 0)
-                Destroy(gameObject);
+                Die();
         }
     }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-
     }
-    
+
     public bool Damage(int damage)
     {
         var damageLeft = damage - Shield;
@@ -54,6 +55,12 @@ public abstract class Character : MonoBehaviour
         {
             Life -= damageLeft;
         }
+
         return (Life > 0);
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

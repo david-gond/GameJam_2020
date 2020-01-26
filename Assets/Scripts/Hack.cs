@@ -23,12 +23,8 @@ public class Hack : Skill
     {
         if (character.HackableObject == null) return false;
         if (!base.Activate()) return false;
-        Debug.Log("Hacking");
         var hackController = character.HackableObject.GetComponent<HackController>();
-        foreach (var hack in hackController.hackable)
-        {
-            hack.Open();
-        }
+        hackController.Hack();
         return true;
     }
 }

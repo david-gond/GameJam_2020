@@ -7,7 +7,10 @@ public class Door : Hackable
 {
     private Animator animator;
     private GameObject coll;
-    public GameObject door;
+    private AudioSource audio;
+
+    public AudioClip open;
+    public AudioClip close;
 
     // Start is called before the first frame update
     private void Start()
@@ -15,6 +18,7 @@ public class Door : Hackable
         animator = GetComponent<Animator>();
         animator.SetBool("isOpen", false);
         coll = transform.Find("Collision").gameObject;
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -26,15 +30,15 @@ public class Door : Hackable
     public override void Open()
     {
         animator.SetBool("isOpen", true);
-        // Manage collisions here
         coll.SetActive(false);
-        Debug.Log("Open");
+        audio.PlayOneShot(open);
     }
 
     public override void Close()
     {
         animator.SetBool("isOpen", false);
-        Debug.Log("Close");
         coll.SetActive(true);
+        audio.PlayOneShot(close);
+
     }
 }

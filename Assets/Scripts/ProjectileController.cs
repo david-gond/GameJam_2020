@@ -26,7 +26,6 @@ public class ProjectileController : MonoBehaviour
     {
         var gob = collision.gameObject;
         var character = gob.GetComponent<Character>();
-        Debug.Log(team);
         if (character != null)
         {
             switch (team)
