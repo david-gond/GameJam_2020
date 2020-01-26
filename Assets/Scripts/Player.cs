@@ -218,6 +218,14 @@ public abstract class Player : Character
 
     public void Move(float hDirection, float vDirection)
     {
+        if ((hDirection == 0f) && (vDirection == 0f))
+        {
+            animator.SetBool("isMoving",false);
+        }
+        else
+        {
+            animator.SetBool("isMoving", true);
+        }
         var moveVector = new Vector3(hDirection, vDirection, .0f);
         rb.MovePosition(new Vector2(transform.position.x + moveVector.x * movespeed * Time.deltaTime,
             transform.position.y + moveVector.y * movespeed * Time.deltaTime));
