@@ -11,6 +11,7 @@ public class Timer : MonoBehaviour
     private int minuts;
     private int seconds;
     private int previous_up;
+    public GameObject deathscreen;
 
     // Start is called before the first frame update
     void Start()
@@ -37,5 +38,9 @@ public class Timer : MonoBehaviour
         minuts = timer / 60;
         seconds = timer - (minuts * 60);
         affich_time.text = (minuts.ToString()+":"+seconds.ToString());
+        if (timer == 0)
+        {
+            deathscreen.SetActive(true);
+        }
     }
 }

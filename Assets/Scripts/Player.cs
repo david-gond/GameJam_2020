@@ -62,6 +62,7 @@ public abstract class Player : Character
         animator = GetComponent<Animator>();
     }
 
+
     // Update is called once per frame
     protected new virtual void Update()
     {

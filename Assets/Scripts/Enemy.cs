@@ -7,6 +7,7 @@ public class Enemy : Character
     public float fieldOfView;
     public int movespeed;
     private Rigidbody2D rb;
+    public GameObject gameoverscreen;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -17,6 +18,15 @@ public class Enemy : Character
     }
 
     // Update is called once per frame
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            gameoverscreen.SetActive(true);
+        }
+    }
+
     protected override void Update()
     {
         CheckVision();
