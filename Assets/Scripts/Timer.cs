@@ -41,6 +41,8 @@ public class Timer : MonoBehaviour
         if (timer == 0)
         {
             deathscreen.SetActive(true);
+            GameObject.Find("GameManager").GetComponent<GameManager>().isScreenSplit = false;
+            GameObject.Find("GameManager").GetComponent<GameManager>().canSplitScreen = false;
         }
     }
 }

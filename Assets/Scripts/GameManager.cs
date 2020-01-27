@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     private Rect fullScreen;
     private Rect splitScreen;
     private Rect splitBorder;
-    private bool isScreenSplit;
+    public bool isScreenSplit;
+    public bool canSplitScreen;
 
     public int Noise
     {
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
         splitBorder = new Rect(Camera.main.transform.position, new Vector2(width, height));
         splitBorder.size *= 0.9f;
         isScreenSplit = false;
+        canSplitScreen = true;
     }
 
     // Update is called once per frame
@@ -76,7 +78,10 @@ public class GameManager : MonoBehaviour
             {
                 p2Camera.SetActive(true);
                 Camera.main.rect = splitScreen;
-                isScreenSplit = true;
+                if (canSplitScreen)
+                {
+                    isScreenSplit = true;
+                }
             }
             
         }

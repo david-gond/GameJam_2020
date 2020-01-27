@@ -25,6 +25,8 @@ public class Enemy : Character
         if (collision.gameObject.tag == "Player")
         {
             gameoverscreen.SetActive(true);
+            GameObject.Find("GameManager").GetComponent<GameManager>().isScreenSplit = false;
+            GameObject.Find("GameManager").GetComponent<GameManager>().canSplitScreen = false;
         }
     }
 

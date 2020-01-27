@@ -17,6 +17,8 @@ public class victory : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            GameObject.Find("GameManager").GetComponent<GameManager>().isScreenSplit = false;
+            GameObject.Find("GameManager").GetComponent<GameManager>().canSplitScreen = false;
             endscreen.SetActive(true);
         }
     }
